@@ -1,10 +1,11 @@
 import "./App.css";
+import BluetoothComponent from "./components/Bluetooth";
 
 function App() {
   return (
     <>
       <h1>BI_PWA</h1>
-      <button>Connect Bluetooth</button>
+      <BluetoothComponent />
     </>
   );
 }
