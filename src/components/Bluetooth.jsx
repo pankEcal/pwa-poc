@@ -1,14 +1,17 @@
 let options = {
   filters: [
     {
-      namePrefix: "OnePlus",
+      namePrefix: "Android",
     },
   ],
   // acceptAllDevices: true,
 };
 const myOwnConnection = async () => {
   try {
-    const device = await navigator.bluetooth.requestDevice(options);
+    const device = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      // options,
+    });
 
     console.log(device);
 
