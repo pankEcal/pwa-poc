@@ -1,27 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BluetoothData from "./ResponseData";
 
+let myService = "0000180f-0000-1000-8000-00805f9b34fb";
+
 let options = {
-  filters: [
-    {
-      namePrefix: "Android",
-    },
-  ],
-  // acceptAllDevices: true,
+  acceptAllDevices: true,
+  // optionalServices: [myService],
+  // services: [myService],
+  // filters: [],
+  // exclusionFilters: [],
 };
 
 const BluetoothComponent = () => {
   const [deviceData, setDeviceData] = useState();
 
-  // UUID to get the battery level
-  let myService = "0000180f-0000-1000-8000-00805f9b34fb";
-
   const myOwnConnection = async () => {
     try {
-      const device = await navigator.bluetooth.requestDevice({
-        acceptAllDevices: true,
-        optionalServices: [myService],
-      });
+      const device = await navigator.bluetooth.requestDevice(options);
       const server = await device.gatt.connect();
       const service = await server.getPrimaryService(myService);
       const characteristics = await service.getCharacteristics();
@@ -34,8 +29,7 @@ const BluetoothComponent = () => {
       console.log("device: ", device);
       console.log("server: ", server);
       console.log("service: ", service);
-      console.log("characteristics: ");
-      characteristics.map((c) => console.log(c));
+      console.log("characteristics: ", characteristics[0]);
     } catch (err) {
       console.log(err);
     }
