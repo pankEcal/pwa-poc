@@ -1,11 +1,14 @@
 import { useState } from "react";
 import BluetoothData from "./ResponseData";
 
-let myService = "0000180f-0000-1000-8000-00805f9b34fb";
+let myService = [
+  // generic_access
+  "00001800-0000-1000-8000-00805f9b34fb",
+];
 
 let options = {
   acceptAllDevices: true,
-  // optionalServices: [myService],
+  optionalServices: myService,
   // services: [myService],
   // filters: [],
   // exclusionFilters: [],
@@ -18,7 +21,7 @@ const BluetoothComponent = () => {
     try {
       const device = await navigator.bluetooth.requestDevice(options);
       const server = await device.gatt.connect();
-      const service = await server.getPrimaryService(myService);
+      const service = await server.getPrimaryService(myService[0]);
       const characteristics = await service.getCharacteristics();
 
       const { id, name } = await device;
@@ -29,7 +32,7 @@ const BluetoothComponent = () => {
       console.log("device: ", device);
       console.log("server: ", server);
       console.log("service: ", service);
-      console.log("characteristics: ", characteristics[0]);
+      console.log("characteristics: ", characteristics);
     } catch (err) {
       console.log(err);
     }
